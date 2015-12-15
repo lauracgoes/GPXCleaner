@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gpx
+    creator="LoadMyTracks/045 http://www.cluetrust.com/LoadMyTracks.html"
+    version="1.1" xmlns="http://www.topografix.com/GPX/1/1"
+    xmlns:geocache="http://www.groundspeak.com/cache/1/0"
+    xmlns:gpxdata="http://www.cluetrust.com/XML/GPXDATA/1/0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.cluetrust.com/XML/GPXDATA/1/0 http://www.cluetrust.com/Schemas/gpxdata10.xsd">
+   <trk>
+        <name>ACTIVE LOG</name>
+        <trkseg>
+            <trkpt lat="44.0226203" lon="-123.1245494">
+                <time>2007-02-18T00:33:26-03:00</time>
+                <ele>295.742676</ele>
+            </trkpt>
+            <trkpt lat="44.02248083" lon="-123.1245669">
+                <ele>261.135254</ele>
+                <time>2007-02-18T03:34:36Z</time>
+            </trkpt>
+            <trkpt lat="44.02268685" lon="-123.1244315">
+                <ele>261.135254</ele>
+                <time>2007-02-18T03:35:13Z</time>
+            </trkpt>
+            <trkpt lat="44.02352739" lon="-123.1252865">
+                <time>2007-02-18T00:37:36-03:00</time>
+                <ele>243.831543</ele>
+            </trkpt>
+            <trkpt lat="44.02652384" lon="-123.082817">
+                <time>2007-02-18T00:45:31-03:00</time>
+                <ele>107.324341</ele>
+            </trkpt>
+            <trkpt lat="44.03342583" lon="-123.0879224">
+                <time>2007-02-18T00:47:43-03:00</time>
+                <ele>107.805054</ele>
+            </trkpt>
+            <trkpt lat="44.03636386" lon="-123.0745513">
+                <time>2007-02-18T00:51:39-03:00</time>
+                <ele>130.395996</ele>
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>
