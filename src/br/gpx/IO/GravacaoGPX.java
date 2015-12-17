@@ -9,6 +9,10 @@ import javax.xml.bind.Marshaller;
 import br.gpx.modelo.GPX;
 import br.gpx.modelo.Trajeto;
 
+/**
+ * Classe responsavel pela geracao dos arquivos gpx
+ *
+ */
 public class GravacaoGPX {
 	
 	/**

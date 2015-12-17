@@ -26,7 +26,7 @@ public class TesteLeitorGravacao {
 	// O Metodo deve ser capaz de ler uma string e converte-la em um
 	// Objeto do tipo Trajeto
 	@Test
-	public void testReadTrackPoints() {
+	public void testLeTrajetoDeString() {
 		String teste = "<trk>"
 				+ "<trkseg>"
 				+ "<trkpt lat=\"44.03328292\" lon=\"-123.0880082\">" 
@@ -39,30 +39,31 @@ public class TesteLeitorGravacao {
 		assertNotNull(trajeto);
 		assertNotNull(trajeto.getSegmentos());
 		assertNotNull(trajeto.getSegmentos().get(0).getPontos());
-		assertEquals(trajeto.getSegmentos().size(), 1);
-		assertEquals(trajeto.getSegmentos().get(0).getPontos().size(), 1);
-		assertEquals(trajeto.getSegmentos().get(0).getPontos().get(0).getLatitude(), 44.03328292, 0.00001);
-		assertEquals(trajeto.getSegmentos().get(0).getPontos().get(0).getLongitude(), -123.0880082, 0.00001);
-		assertEquals(trajeto.getSegmentos().get(0).getPontos().get(0).getElevacao(), 107.805054, 0.00001);
+		assertEquals(1, trajeto.getSegmentos().size());
+		assertEquals(1, trajeto.getSegmentos().get(0).getPontos().size());
+		//O metodo que verifica doubles pede uma variacao pela imprecisao do double, mas nesse caso nao deve haver imprecisao
+		assertEquals(44.03328292, trajeto.getSegmentos().get(0).getPontos().get(0).getLatitude(), 0);
+		assertEquals(-123.0880082, trajeto.getSegmentos().get(0).getPontos().get(0).getLongitude(), 0);
+		assertEquals(107.805054, trajeto.getSegmentos().get(0).getPontos().get(0).getElevacao(), 0);
 	}
 	
 	// O Metodo deve ser capaz de ler um arquivo e retornar um objeto Trajeto
 	// Para esse teste sera utilizado o arquivo testeLeitura.gpx que contem 1
 	// Segmento com 7 Pontos
 	@Test
-	public void testCarregarArquivo() {
+	public void testeCarregarArquivo() {
 		Trajeto trajeto = LeitorGPX.carregarArquivo("testeLeitura.gpx");
 		assertNotNull(trajeto);
 		assertNotNull(trajeto.getSegmentos());
 		assertNotNull(trajeto.getSegmentos().get(0).getPontos());
-		assertEquals(trajeto.getSegmentos().size(), 1);
-		assertEquals(trajeto.getSegmentos().get(0).getPontos().size(), 7);
+		assertEquals(1, trajeto.getSegmentos().size());
+		assertEquals(7, trajeto.getSegmentos().get(0).getPontos().size());
 	}
 	
 	//Esse teste verifica se um arquivo e criado a partir da classe GravacaoGPX utilizando um ponto criado 
 	//no codigo
 	@Test
-	public void test() {
+	public void testeGravar() {
 		Date dt = new Date();
 		Ponto p = new Ponto(44.03, -100.2, 200, dt);
 		Segmento s = new Segmento();
@@ -71,19 +72,22 @@ public class TesteLeitorGravacao {
 		ls.add(s);
  		Trajeto t = new Trajeto("TEST_LOG", ls);
 		GravacaoGPX.gerarArquivoXml("testeGravacaoELeitura.gpx",t);
+		//verifica se o arquivo foi criado realmente
 		File f = new File("testeGravacaoELeitura.gpx");
 		assertNotNull(f);
+		//Depois que gera o arquivo, ele valida e verifica se os valores foram os mesmos fornecidos
 		Trajeto trajeto = LeitorGPX.carregarArquivo("testeGravacaoELeitura.gpx");
 		assertNotNull(trajeto);
 		assertEquals(trajeto.getNome(), "TEST_LOG");
 		assertNotNull(trajeto.getSegmentos());
 		assertNotNull(trajeto.getSegmentos().get(0).getPontos());
-		assertEquals(trajeto.getSegmentos().size(), 1);
-		assertEquals(trajeto.getSegmentos().get(0).getPontos().size(), 1);
-		assertEquals(trajeto.getSegmentos().get(0).getPontos().get(0).getData(), dt);
-		assertEquals(trajeto.getSegmentos().get(0).getPontos().get(0).getLatitude(), 44.03, 0.001);
-		assertEquals(trajeto.getSegmentos().get(0).getPontos().get(0).getLongitude(), -100.2, 0.001);
-		assertEquals(trajeto.getSegmentos().get(0).getPontos().get(0).getElevacao(), 200, 0.001);
+		assertEquals(1, trajeto.getSegmentos().size(), 1);
+		assertEquals(1, trajeto.getSegmentos().get(0).getPontos().size());
+		assertEquals(dt, trajeto.getSegmentos().get(0).getPontos().get(0).getData());
+		//O metodo que verifica doubles pede uma variacao pela imprecisao do double, mas nesse caso nao deve haver imprecisao
+		assertEquals(44.03, trajeto.getSegmentos().get(0).getPontos().get(0).getLatitude(), 0);
+		assertEquals(-100.2, trajeto.getSegmentos().get(0).getPontos().get(0).getLongitude(), 0);
+		assertEquals(200, trajeto.getSegmentos().get(0).getPontos().get(0).getElevacao(), 0);
 	}
 
 }

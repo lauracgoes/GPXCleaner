@@ -8,6 +8,10 @@ import br.gpx.modelo.Ponto;
 import br.gpx.modelo.Segmento;
 import br.gpx.modelo.Trajeto;
 
+/**
+ * Classe responsavel por fazer as reducoes dos pontos
+ *
+ */
 public class GPXCleaner {
 
 	/**
@@ -91,7 +95,12 @@ public class GPXCleaner {
 		return trajeto;
 	}
 	
-	private static Trajeto reduzirParaSegmentoUnico(Trajeto trajeto){
+	/**
+	 * Metodo que junta todos os segmentos de um trajeto em um segmento unico
+	 * @param trajeto
+	 * @return
+	 */
+	public static Trajeto reduzirParaSegmentoUnico(Trajeto trajeto){
 		Segmento segmento = new Segmento();
 		for (Segmento se : trajeto.getSegmentos()) {
 			segmento.getPontos().addAll(se.getPontos());

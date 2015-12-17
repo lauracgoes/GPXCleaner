@@ -1,5 +1,6 @@
 package br.gpx.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -14,7 +15,7 @@ public class Trajeto {
 	private List<Segmento> segmentos;
 
 	public Trajeto() {
-		// TODO Auto-generated constructor stub
+		this.segmentos = new ArrayList<Segmento>();
 	}
 	
 	public Trajeto(String nome, List<Segmento> trackSegments) {

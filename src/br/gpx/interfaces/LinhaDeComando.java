@@ -5,6 +5,10 @@ import br.gpx.IO.GravacaoGPX;
 import br.gpx.cleaner.GPXCleaner;
 import br.gpx.modelo.Trajeto;
 
+/**
+ * Classe com a interface de linha de comando
+ *
+ */
 public class LinhaDeComando {
 	
 	public static void main(String[] args) {

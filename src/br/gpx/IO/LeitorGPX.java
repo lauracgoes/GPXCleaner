@@ -11,6 +11,10 @@ import javax.xml.bind.Unmarshaller;
 
 import br.gpx.modelo.Trajeto;
 
+/**
+ * Classe responsavel pela leitura de dados
+ *
+ */
 public class LeitorGPX {
 	
 		
