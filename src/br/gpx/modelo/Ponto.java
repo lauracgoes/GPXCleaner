@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import br.gpx.exception.PontoInvalidoException;
+
 @XmlRootElement(name="trkpt")
 public class Ponto {
 
@@ -19,9 +21,9 @@ public class Ponto {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Ponto(double latitude, double longitude, double elevacao, Date data) {
-		this.latitude = latitude;
-		this.longitude = longitude;
+	public Ponto(double latitude, double longitude, double elevacao, Date data) throws PontoInvalidoException {
+		setLatitude(latitude);
+		setLongitude(longitude);
 		this.elevacao = elevacao;
 		this.data = data;
 	}
@@ -30,14 +32,20 @@ public class Ponto {
 	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(double latitude) {
+	public void setLatitude(double latitude) throws PontoInvalidoException {
+		if(latitude < -90 || latitude > 90 ){
+			throw new PontoInvalidoException("Latitude deve ser estar entre -90 e 90");
+		}
 		this.latitude = latitude;
 	}
 	@XmlAttribute(name="lon")
 	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(double longitude) {
+	public void setLongitude(double longitude) throws PontoInvalidoException {
+		if(longitude < -180 || longitude > 180 ){
+			throw new PontoInvalidoException("Latitude deve ser estar entre -180 e 180");
+		}
 		this.longitude = longitude;
 	}
 	@XmlElement(name="ele")

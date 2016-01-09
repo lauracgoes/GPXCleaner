@@ -2,6 +2,7 @@ package br.gpx.teste;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import br.gpx.IO.GravacaoGPX;
 import br.gpx.IO.LeitorGPX;
+import br.gpx.exception.PontoInvalidoException;
 import br.gpx.modelo.Ponto;
 import br.gpx.modelo.Segmento;
 import br.gpx.modelo.Trajeto;
@@ -65,7 +67,12 @@ public class TesteLeitorGravacao {
 	@Test
 	public void testeGravar() {
 		Date dt = new Date();
-		Ponto p = new Ponto(44.03, -100.2, 200, dt);
+		Ponto p = null;
+		try {
+			p = new Ponto(44.03, -100.2, 200, dt);
+		} catch (PontoInvalidoException e) {
+			fail(e.getMessage());
+		}
 		Segmento s = new Segmento();
 		s.getPontos().add(p);
 		List<Segmento> ls = new ArrayList<Segmento>();

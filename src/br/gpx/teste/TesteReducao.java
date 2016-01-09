@@ -1,10 +1,12 @@
 package br.gpx.teste;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
 import br.gpx.cleaner.GPXCleaner;
+import br.gpx.exception.PontoInvalidoException;
 import br.gpx.modelo.Ponto;
 import br.gpx.modelo.Segmento;
 import br.gpx.modelo.Trajeto;
@@ -58,7 +60,15 @@ public class TesteReducao {
 	@Test
 	public void testReducaoPorDistancia() {
 		//O sistema nao valida verifica datas nem elevacao entao podemos usar como null e um valor generico pra elevacao 100
-		Ponto p1 = new Ponto(40, 100, 100, null), p2 = new Ponto(40.001, 100.002, 100, null), p3 = new Ponto(40.002, 100, 100, null);
+		Ponto p1= null, p2 = null, p3 = null;
+		try {
+			p1 = new Ponto(40, 100, 100, null);
+			p2 = new Ponto(40.001, 100.002, 100, null);
+			p3 = new Ponto(40.002, 100, 100, null);
+		} catch (PontoInvalidoException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
 		//0.002 de diferenca no eixo y entre os dois pontos no eixo produz um desvio de cerca de 2 metros
 		//                  o p2(40.001, 100.002) 
 		//     o            |              o
