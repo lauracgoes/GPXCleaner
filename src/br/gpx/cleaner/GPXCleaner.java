@@ -24,11 +24,10 @@ public class GPXCleaner {
 		trajeto = reduzirParaSegmentoUnico(trajeto);
 		List<Ponto> todosPontos = trajeto.getSegmentos().get(0).getPontos();
 		List<Ponto> pontosReduzidos = new ArrayList<Ponto>();
-		int quantidadePontosInicial = todosPontos.size();
-		int quantidadePontosRemover = (int) ((quantidadePontosInicial*porcentagem)/100);
-		int mod = quantidadePontosInicial / quantidadePontosRemover;
 		for (int i = 0; i < todosPontos.toArray().length; i++) {
-			if(i%mod != 0){
+			//(i+1)*((double)porcentagem/100) = posicao dos pontos a serem removidos
+			//o resto da divisão inteira por 1 fornece os numeros que devem ser removidos
+			if((((i+1)*((double)porcentagem/100)))%1 != 0){
 				pontosReduzidos.add(todosPontos.get(i));
 			}
 		}
