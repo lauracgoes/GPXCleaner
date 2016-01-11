@@ -49,5 +49,6 @@ public class LinhaDeComando {
 		else
 			trajeto = GPXCleaner.reduzirPorPorcentagem(percentual, trajeto);
 		GravacaoGPX.gerarArquivoXml(nomeFinal, trajeto);
+		System.out.println("Reducao realizada com sucesso!!");
 	}
 }
