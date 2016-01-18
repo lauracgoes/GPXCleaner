@@ -14,31 +14,31 @@ public class TestePontos {
 	@SuppressWarnings("unused")
 	@Test
 	public void testPonto() {
-		try{
+		try {
 			Ponto p1 = new Ponto(-95, 110, 200, new Date());
 			fail();
-		}catch(PontoInvalidoException e){
+		} catch (PontoInvalidoException e) {
 			assertTrue(true);
 		}
-		try{
+		try {
 			Ponto p2 = new Ponto(95, 110, 200, new Date());
 			fail();
-		}catch(PontoInvalidoException e){
+		} catch (PontoInvalidoException e) {
 			assertTrue(true);
 		}
-		try{
+		try {
 			Ponto p3 = new Ponto(-45, 190, 200, new Date());
 			fail();
-		}catch(PontoInvalidoException e){
+		} catch (PontoInvalidoException e) {
 			assertTrue(true);
 		}
-		try{
+		try {
 			Ponto p4 = new Ponto(45, -190, 200, new Date());
 			fail();
-		}catch(PontoInvalidoException e){
+		} catch (PontoInvalidoException e) {
 			assertTrue(true);
 		}
-		
+
 	}
 
 }
