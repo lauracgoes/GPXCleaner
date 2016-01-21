@@ -190,7 +190,6 @@ public class GPXCleaner {
 		 * Soma a distancia entre todos os pontos
 		 */
 		for (int i = 1; i < pontos.size(); i++) {
-			System.out.println("LatA = "+pontos.get(i - 1).getLatitude() + " LonA =" +pontos.get(i - 1).getLongitude() + " LatB = "+pontos.get(i).getLatitude() + " LonB =" +pontos.get(i).getLongitude() + " Distancia = "+ calcularDistanciaEntrePontos(pontos.get(i - 1), pontos.get(i)));
 			distanciaTotal += calcularDistanciaEntrePontos(pontos.get(i - 1), pontos.get(i));
 		}
 		double dataFinal = (horaFinal.getTime() - horaInicial.getTime()) / 1000 / 60 / 60; 
