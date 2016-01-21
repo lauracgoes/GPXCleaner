@@ -1,7 +1,7 @@
 package br.gpx.cleaner;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 
 import br.gpx.modelo.Ponto;
@@ -25,43 +25,51 @@ public class GPXCleaner {
 	public static Trajeto reduzirPorPorcentagem(int porcentagem, Trajeto trajeto) {
 		trajeto = reduzirParaSegmentoUnico(trajeto);
 		List<Ponto> todosPontos = trajeto.getSegmentos().get(0).getPontos();
-		// Calcula quantos pontos devem ser reduzidos
+		/*
+		 * Calcula quantos pontos devem ser reduzidos
+		 */
 		double quantidadeInicial = todosPontos.size();
 		double quantidadeFinal = quantidadeInicial - ((quantidadeInicial * porcentagem) / 100);
-		double menorDistancia = calcularMenorDistancia(todosPontos);
-		// enquanto a quantidade de pontos for maior que a quantidade que deve
-		// retornar remove os pontos que possuam menor distancia entre eles
-		int i = 1;
+		double menorDistancia = calcularMenorDesvio(todosPontos);
+		/*
+		 * Enquanto a quantidade de pontos for maior que a quantidade que deve
+		 * retornar remove os pontos que possuam menor distancia entre eles
+		 */
 		while (todosPontos.size() > quantidadeFinal) {
-			double distanciaAtual = calcularDistanciaEntrePontos(todosPontos.get(i - 1), todosPontos.get(i));
-			if (distanciaAtual == menorDistancia) {
-				todosPontos.remove(i);
-				menorDistancia = calcularMenorDistancia(todosPontos);
-			}
-			// atualiza o proximo indice a ser verificado
-			if (i == todosPontos.size() - 1) {
-				i = 1;
-			} else {
-				i++;
+			menorDistancia = calcularMenorDesvio(todosPontos);
+			for (int i = 1; i < todosPontos.size() - 1; i++) {
+				double distanciaAtual = calcularDesvio(todosPontos.get(i - 1), todosPontos.get(i),
+						todosPontos.get(i + 1));
+				if (distanciaAtual == menorDistancia) {
+					todosPontos.remove(i);
+					break;
+				}
 			}
 		}
+		// System.out.println("Quantidade de pontos inicial: " + quantidadeInicial + " Quantidade de pontos final: " + todosPontos.size());
 		trajeto.getSegmentos().get(0).setPontos(todosPontos);
 		return trajeto;
 	}
 
 	/**
-	 * Verifica a menor distancia entre os pontos e retorna a menor distancia
-	 * entre eles, de modo a remover apenas os pontos com que causem menor erro
-	 * no caminho
+	 * Verifica o menor desvio entre os pontos e retorna a menor distancia
+	 * entre eles, o metodo elimina o primeiro e o ultimo pontos da trilha
 	 * 
 	 * @param pontos
 	 * @return
 	 */
-	private static double calcularMenorDistancia(List<Ponto> pontos) {
-		double menorDistancia = 0;
-		for (int i = 1; i < pontos.size(); i++) {
-			double menorDistanciaCalculada = calcularDistanciaEntrePontos(pontos.get(i - 1), pontos.get(i));
-			if (menorDistancia < menorDistanciaCalculada) {
+	private static double calcularMenorDesvio(List<Ponto> pontos) {
+		double menorDistancia = 1000;
+		/*
+		 * verifica a menor distancia exceto o primeiro (i = 1) e ultimo ponto (size -1)
+		 */
+		for (int i = 1; i < pontos.size() - 1; i++) {
+			double menorDistanciaCalculada = calcularDesvio(pontos.get(i - 1), pontos.get(i), pontos.get(i + 1));
+			if (menorDistanciaCalculada < menorDistancia) {
+				/*
+				 * Se a menor distancia calculada for menor que a menor
+				 * distancia atual esta passa a ser a menor distancia
+				 */
 				menorDistancia = menorDistanciaCalculada;
 			}
 		}
@@ -70,30 +78,47 @@ public class GPXCleaner {
 
 	/**
 	 * Calcula a o segmento de reta com o tamanho relativo a distancia dos
-	 * pontos a e b
+	 * pontos a e b utilizando a formula do Haversine
 	 * 
 	 * @param a
 	 * @param b
 	 * @return
 	 */
-	private static double calcularDistanciaEntrePontos(Ponto a, Ponto b) {
-		return Math.sqrt(
-				Math.pow((a.getLatitude() - b.getLatitude()), 2) + Math.pow((a.getLongitude() - b.getLongitude()), 2));
+	public static double calcularDistanciaEntrePontos(Ponto a, Ponto b) {
+		double raio = 6371; // Distancia obtida a partir do raio medio da terra = 6.371 km
+		double dlong = Math.toRadians(b.getLongitude() - a.getLongitude());
+		double dlat = Math.toRadians(b.getLatitude() - a.getLatitude());
+		double hav = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(Math.toRadians(a.getLatitude()))
+				* Math.cos(Math.toRadians(b.getLatitude())) * Math.pow(Math.sin(dlong / 2), 2);
+		double distanciaAngular = 2 * Math.atan2(Math.sqrt(hav), Math.sqrt(1 - hav));
+		double distanciaKm = raio * distanciaAngular;
+		return distanciaKm;
 	}
 
 	/**
-	 * Calcula a area utilizando o determinante de uma matriz construida a
-	 * partir dos pontos (x,y) de a, b e c em que x = latitude e y = longitude e
-	 * a ultima coluna da matriz eh preenchida com 1 ABS(Ax * By + Ay * Cx + Bx
-	 * * Cy - Ax * Cy - Ay * Bx - By * Cx)/2 depois a altura a partir da formula
-	 * A = (bh)/2 >>> h = 2A/b
+	 * Calcula a distancia do ponto atual B a reta formada pelo ponto anterior e
+	 * o proximo ponto
+	 * 
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @return
 	 */
 	private static double calcularDesvio(Ponto a, Ponto b, Ponto c) {
-		double areaTriangulo = Math.abs((a.getLatitude() * b.getLongitude() + a.getLongitude() * c.getLatitude()
-				+ b.getLatitude() * c.getLongitude() - a.getLatitude() * c.getLongitude()
-				- a.getLongitude() * b.getLatitude() - b.getLongitude() * c.getLatitude())) / 2;
-		double base = calcularDistanciaEntrePontos(a, c);
-		return ((2 * areaTriangulo) / base);
+		Double ladoAC = calcularDistanciaEntrePontos(a, c);
+		Double ladoAB = calcularDistanciaEntrePontos(a, b);
+		Double ladoCB = calcularDistanciaEntrePontos(c, b);
+		/*
+		 * Calculo da area do triangulo ABC pelo Teorema de Heron
+		 */
+		Double semiPerimetro = (ladoAC + ladoAB + ladoCB) / 2;
+		Double area = Math
+				.sqrt(semiPerimetro * (semiPerimetro - ladoAC) * (semiPerimetro - ladoAB) * (semiPerimetro - ladoCB));
+		/*
+		 * A distancia e dada atravez da altura do triangulo com relacao a
+		 * baseAC (h = 2*area/base)
+		 */
+		return (2 * area) / ladoAC;
 	}
 
 	/**
@@ -107,27 +132,27 @@ public class GPXCleaner {
 	public static Trajeto reduzirPorDistancia(double distancia, Trajeto trajeto) {
 		trajeto = reduzirParaSegmentoUnico(trajeto);
 		List<Ponto> todosPontos = trajeto.getSegmentos().get(0).getPontos();
-		List<Ponto> pontosReduzidos = new ArrayList<Ponto>();
-		Iterator<Ponto> tp = todosPontos.iterator();
-		Ponto a = tp.next(), b = tp.next(), c = null;
-		pontosReduzidos.add(a);
-		while (tp.hasNext()) {
-			c = tp.next();
-			// calcula o desvio entre os 3 pontos com a distancia minima
-			// especificada, se for maior, adiciona na lista se for menor, nao
-			if (calcularDesvio(a, b, c) > distancia) {
-				pontosReduzidos.add(b);
-				// se adicionar o ponto B, este passa a ser o ponto A
-				a = b;
+		/*
+		 * Enquanto a menor distancia entre todos os pontos for menor que a distancia especificada
+		 * ainda devem ser removidos pontos
+		 */
+		double menorDistancia = calcularMenorDesvio(todosPontos);
+		while ( menorDistancia < distancia) {
+			for (int i = 1; i < todosPontos.size() - 1; i++) {
+				double distanciaAtual = calcularDesvio(todosPontos.get(i - 1), todosPontos.get(i),
+						todosPontos.get(i + 1));
+				if (distanciaAtual == menorDistancia) {
+					/*
+					 *  Se a distancia atua for a menor, remove o ponto
+					 *  e recalcula a distancia, sempre eliminando os extremos
+					 */
+					todosPontos.remove(i); 
+					menorDistancia = calcularMenorDesvio(todosPontos);
+					break;
+				}
 			}
-			// o ponto C entao vira B, e C recebe um novo ponto no proximo loop
-			// do if
-			b = c;
 		}
-		// Por fim adiciona o ultimo C ao segmento
-		pontosReduzidos.add(c);
-		// Troca os trackpoints do segmento 1(unico) pelos pontos apos a reducao
-		trajeto.getSegmentos().get(0).setPontos(pontosReduzidos);
+		trajeto.getSegmentos().get(0).setPontos(todosPontos);
 		return trajeto;
 	}
 
@@ -146,6 +171,39 @@ public class GPXCleaner {
 		segmentos.add(segmento);
 		Trajeto trajetoReduzido = new Trajeto(trajeto.getNome(), segmentos);
 		return trajetoReduzido;
+	}
+
+	/**
+	 * Retorna uma string com a distância percorrida, tempo gasto e velocidade
+	 * media no trajeto
+	 * 
+	 * @param trajeto
+	 * @return
+	 */
+	public static String getDadosTrajeto(Trajeto trajeto) {
+		trajeto = reduzirParaSegmentoUnico(trajeto);
+		double distanciaTotal = 0;
+		List<Ponto> pontos = trajeto.getSegmentos().get(0).getPontos();
+		Date horaInicial = pontos.get(0).getData();
+		Date horaFinal = pontos.get(pontos.size() - 1).getData();
+		/*
+		 * Soma a distancia entre todos os pontos
+		 */
+		for (int i = 1; i < pontos.size(); i++) {
+			System.out.println("LatA = "+pontos.get(i - 1).getLatitude() + " LonA =" +pontos.get(i - 1).getLongitude() + " LatB = "+pontos.get(i).getLatitude() + " LonB =" +pontos.get(i).getLongitude() + " Distancia = "+ calcularDistanciaEntrePontos(pontos.get(i - 1), pontos.get(i)));
+			distanciaTotal += calcularDistanciaEntrePontos(pontos.get(i - 1), pontos.get(i));
+		}
+		double dataFinal = (horaFinal.getTime() - horaInicial.getTime()) / 1000 / 60 / 60; 
+		/*
+		 *  Pega o tempo total em horas
+		 */
+		String dadosTrajeto = String.format(
+				"Distancia Total Percorrida: %.2f km em %.2f horas \nA uma velocidade media de: %.2f km/h \n", 
+				distanciaTotal, dataFinal, (distanciaTotal / dataFinal));
+		/*
+		 *  Cria a string com os decimais truncados na segunda casa decimal
+		 */
+		return dadosTrajeto;
 	}
 
 }

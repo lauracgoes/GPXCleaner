@@ -15,7 +15,9 @@ public class LinhaDeComando {
 		String stringPercentual, nomeOriginal, nomeFinal;
 		int percentual = 0;
 		double distancia = 0;
-		// Verifica se todos os parametros foram fornecidos
+		/*
+		 * Verifica se todos os parametros foram fornecidos
+		 */
 		if (args.length == 3) {
 			stringPercentual = args[0];
 			nomeOriginal = args[1];
@@ -25,7 +27,9 @@ public class LinhaDeComando {
 			return;
 		}
 		try {
-			// Decide se o usuario informou percentual ou desvio de distancia
+			/* 
+			 * Decide se o usuario informou percentual ou desvio de distancia 
+			 */
 			if (stringPercentual.contains("%")) {
 				stringPercentual = stringPercentual.replace("%", "");
 				percentual = Integer.parseInt(stringPercentual);
@@ -34,8 +38,6 @@ public class LinhaDeComando {
 				}
 			} else {
 				distancia = Double.parseDouble(stringPercentual);
-				// ajuste de km para m
-				distancia = distancia / 1000;
 				if (distancia <= 0) {
 					throw new Exception("Distancia invalida");
 				}
@@ -45,12 +47,16 @@ public class LinhaDeComando {
 			return;
 		}
 		Trajeto trajeto = LeitorGPX.carregarArquivo(nomeOriginal);
-		// Reduz a partir do criterio especificado
+		/* 
+		 * Reduz a partir do criterio especificado
+		 */
 		if (distancia != 0)
 			trajeto = GPXCleaner.reduzirPorDistancia(distancia, trajeto);
 		else
 			trajeto = GPXCleaner.reduzirPorPorcentagem(percentual, trajeto);
+		System.out.println(GPXCleaner.getDadosTrajeto(trajeto));
 		GravacaoGPX.gerarArquivoXml(nomeFinal, trajeto);
 		System.out.println("Reducao realizada com sucesso!!");
-	}
+	} 
+	
 }

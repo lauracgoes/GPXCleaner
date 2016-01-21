@@ -37,9 +37,8 @@ public class LeitorGPX {
 		} catch (IOException e) {
 			System.err.printf("Erro: %s.\n", e.getMessage());
 		}
-		// Remove os elementos antes do Log Ativo
 		stringTrajeto = stringTrajeto.substring(stringTrajeto.indexOf("<trk>"), stringTrajeto.indexOf("</gpx>"));
-		return lerTrajeto(stringTrajeto);
+		return lerTrajeto(stringTrajeto); // Remove os elementos antes do Log Ativo
 	}
 
 	/**
