@@ -1,11 +1,8 @@
 package br.gpx.teste;
 
 import static org.junit.Assert.*;
-
 import java.util.Date;
-
 import org.junit.Test;
-
 import br.gpx.exception.PontoInvalidoException;
 import br.gpx.modelo.Ponto;
 
@@ -45,7 +42,5 @@ public class TestePontos {
 		} catch (PontoInvalidoException e) {
 			assertTrue(true);
 		}
-
 	}
-
 }

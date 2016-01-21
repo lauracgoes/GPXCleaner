@@ -3,14 +3,11 @@ package br.gpx.teste;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.junit.Test;
-
 import br.gpx.IO.GravacaoGPX;
 import br.gpx.IO.LeitorGPX;
 import br.gpx.cleaner.GPXCleaner;
@@ -86,7 +83,6 @@ public class TesteGravacao {
 			assertEquals(trajeto.getSegmentos().get(i).getPontos().size(),
 					trajetoClone.getSegmentos().get(i).getPontos().size());
 		}
-
 	}
 
 	/* Esse teste verifica se o clone de um arquivo gpx com segmento unico
@@ -105,5 +101,4 @@ public class TesteGravacao {
 		assertEquals(trajeto.getSegmentos().get(0).getPontos().size(),
 				trajetoClone.getSegmentos().get(0).getPontos().size());
 	}
-
 }

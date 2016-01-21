@@ -1,16 +1,14 @@
 package br.gpx.modelo;
 
 import java.util.Date;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import br.gpx.exception.PontoInvalidoException;
 
 /**
- * Classe do modelo que define o elemento "trkpt" do arquivo GPX 
- * Possui os atributos de Latitude, Longitude, Elevacao e Data
+ * Classe do modelo que define o elemento "trkpt" do arquivo GPX Possui os
+ * atributos de Latitude, Longitude, Elevacao e Data
  *
  */
 @XmlRootElement(name = "trkpt")
@@ -90,5 +88,4 @@ public class Ponto {
 		return "TrackPoint: \n  Latitude:" + this.latitude + "\n  Longitude:" + this.longitude + "\n  Elevacao:"
 				+ this.elevacao + "\n  Data:" + this.data;
 	}
-
 }

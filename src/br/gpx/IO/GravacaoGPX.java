@@ -2,10 +2,8 @@ package br.gpx.IO;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
-
 import br.gpx.modelo.GPX;
 import br.gpx.modelo.Trajeto;
 
@@ -31,8 +29,7 @@ public class GravacaoGPX {
 			OutputStream os = new FileOutputStream(nomeArquivo);
 			jaxbMarshaller.marshal(gpx, os );
 		} catch (Exception e) {
-			System.err.printf("Erro: %s.\n", e.getMessage()); 
+			System.err.printf("Erro: %s.\n", e.getMessage());
 		}
 	}
-
 }

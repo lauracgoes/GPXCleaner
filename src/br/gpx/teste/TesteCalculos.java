@@ -1,9 +1,7 @@
 package br.gpx.teste;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
 import br.gpx.cleaner.GPXCleaner;
 import br.gpx.exception.PontoInvalidoException;
 import br.gpx.modelo.Ponto;

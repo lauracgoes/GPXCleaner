@@ -4,11 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-
 import br.gpx.modelo.Trajeto;
 
 /**
@@ -16,9 +14,9 @@ import br.gpx.modelo.Trajeto;
  *
  */
 public class LeitorGPX {
-
+	
 	/**
-	 * Lê um arquivo GPX e retorna um elemento Trajeto
+	 * Le um arquivo GPX e retorna um elemento Trajeto
 	 * 
 	 * @param nomeArquivo
 	 * @return
@@ -42,7 +40,7 @@ public class LeitorGPX {
 	}
 
 	/**
-	 * Lê uma string e transforma em um elemento do tipo Track
+	 * Le uma string e transforma em um elemento do tipo Track
 	 * 
 	 * @param trackString
 	 * @return
@@ -57,7 +55,6 @@ public class LeitorGPX {
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-		;
 		return null;
 	}
 }

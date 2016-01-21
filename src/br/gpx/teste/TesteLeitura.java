@@ -2,9 +2,7 @@ package br.gpx.teste;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
 import org.junit.Test;
-
 import br.gpx.IO.LeitorGPX;
 import br.gpx.modelo.Trajeto;
 
@@ -41,7 +39,7 @@ public class TesteLeitura {
 		assertEquals(-123.0880082, trajeto.getSegmentos().get(0).getPontos().get(0).getLongitude(), 0);
 		assertEquals(107.805054, trajeto.getSegmentos().get(0).getPontos().get(0).getElevacao(), 0);
 	}
-
+	
 	/* Esse teste deve ser capaz de ler um arquivo e retornar um objeto Trajeto
 	 * Para esse teste sera utilizado o arquivo testeLeitura.gpx que contem 1
 	 * Segmento com 7 Pontos 
@@ -69,5 +67,4 @@ public class TesteLeitura {
 		assertNotNull(trajeto.getSegmentos());
 		assertNotNull(trajeto.getSegmentos().get(0).getPontos());
 	}
-
 }

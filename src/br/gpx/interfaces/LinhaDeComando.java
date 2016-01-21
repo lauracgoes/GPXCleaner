@@ -57,6 +57,5 @@ public class LinhaDeComando {
 		System.out.println(GPXCleaner.getDadosTrajeto(trajeto));
 		GravacaoGPX.gerarArquivoXml(nomeFinal, trajeto);
 		System.out.println("Reducao realizada com sucesso!!");
-	} 
-	
+	}
 }

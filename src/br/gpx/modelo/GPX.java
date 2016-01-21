@@ -13,7 +13,6 @@ public class GPX {
 	private Trajeto trajeto;
 
 	public GPX() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public GPX(Trajeto trajeto) {
@@ -59,5 +58,4 @@ public class GPX {
 	public String getXsi_schemaLocation() {
 		return "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.cluetrust.com/XML/GPXDATA/1/0 http://www.cluetrust.com/Schemas/gpxdata10.xsd";
 	}
-
 }

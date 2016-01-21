@@ -1,15 +1,13 @@
 package br.gpx.exception;
 
 /**
- * Quando uma latitude ou longitude for invalida, aparecerá uma mensagem.
+ * Classe responsavel por validar a latitude e longitude. Se algum valor for
+ * invalido, uma mensagem de erro sera exibida.
  */
 public class PontoInvalidoException extends Exception {
-
 	private static final long serialVersionUID = 1L;
-	
-	 public PontoInvalidoException(String messagem) {
-	        super(messagem);
-	 }
-	
 
+	public PontoInvalidoException(String messagem) {
+		super(messagem);
+	}
 }

@@ -3,7 +3,6 @@ package br.gpx.cleaner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import br.gpx.modelo.Ponto;
 import br.gpx.modelo.Segmento;
 import br.gpx.modelo.Trajeto;
@@ -13,7 +12,7 @@ import br.gpx.modelo.Trajeto;
  *
  */
 public class GPXCleaner {
-
+	
 	/**
 	 * Unifica em um segmento unico o trajeto e reduz a partir da porcentagem
 	 * especificada
@@ -75,7 +74,7 @@ public class GPXCleaner {
 		}
 		return menorDistancia;
 	}
-
+	
 	/**
 	 * Calcula a o segmento de reta com o tamanho relativo a distancia dos
 	 * pontos a e b utilizando a formula do Haversine
@@ -174,7 +173,7 @@ public class GPXCleaner {
 	}
 
 	/**
-	 * Retorna uma string com a distância percorrida, tempo gasto e velocidade
+	 * Retorna uma string com a distancia percorrida, tempo gasto e velocidade
 	 * media no trajeto
 	 * 
 	 * @param trajeto
@@ -204,5 +203,4 @@ public class GPXCleaner {
 		 */
 		return dadosTrajeto;
 	}
-
 }

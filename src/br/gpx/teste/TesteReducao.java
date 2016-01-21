@@ -18,7 +18,7 @@ import br.gpx.modelo.Trajeto;
  * Classe de teste para testar reducoes
  */ 
 public class TesteReducao {
-
+	
 	/* 
 	 * Esse teste deve juntar todos os segmentos em um segmento unico
 	 */
@@ -160,5 +160,4 @@ public class TesteReducao {
 		 */
 		assertEquals(2, t.getSegmentos().get(0).getPontos().size());
 	}
-
 }
