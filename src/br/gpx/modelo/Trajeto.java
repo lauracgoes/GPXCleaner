@@ -7,6 +7,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Classe do modelo que define o elemento "trk" do arquivo GPX 
+ * Possui como atributo uma lista segmentos
+ *
+ */
 @XmlRootElement(name = "trk")
 public class Trajeto {
 

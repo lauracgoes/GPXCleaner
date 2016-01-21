@@ -7,6 +7,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Classe do modelo que define o elemento "trkseg" do arquivo GPX 
+ * Possui como atributo uma lista de pontos
+ *
+ */
 @XmlRootElement(name = "trkseg")
 public class Segmento {
 
